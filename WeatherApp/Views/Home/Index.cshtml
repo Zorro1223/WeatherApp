@@ -1,0 +1,68 @@
+﻿@model WeatherApp.Models.WeatherViewModel
+
+@{
+    ViewData["Title"] = "Прогноз погоды";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-primary text-white p-4">
+                    <h2 class="text-center mb-4">Прогноз погоды</h2>
+                    
+                    <form asp-action="Index" method="get" class="row g-2">
+                        <div class="col-md-6">
+                            <input type="text" name="city" class="form-control" placeholder="Введите город..." value="@Model.City">
+                        </div>
+                        <div class="col-md-4">
+                            <select name="period" class="form-select">
+                                <option value="day" selected="@(Model.Period == "day")">На сегодня</option>
+                                <option value="week" selected="@(Model.Period == "week")">На неделю</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-light w-100">Поиск</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-body p-4">
+                    @if (!string.IsNullOrEmpty(Model.Error))
+                    {
+                        <div class="alert alert-danger">@Model.Error</div>
+                    }
+                    else
+                    {
+                        <h3 class="text-center mb-4">@Model.City</h3>
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            @foreach (var item in Model.Forecast)
+                            {
+                                <div class="col">
+                                    <div class="card h-100 text-center border-0 bg-light shadow-sm">
+                                        <div class="card-body">
+                                            <h6 class="text-muted">@item.Date.ToString("dd.MM HH:mm")</h6>
+                                            <img src="https://openweathermap.org/img/wn/@(item.Icon)@@2x.png" alt="icon">
+                                            <h4 class="card-title">@Math.Round(item.Temperature)°C</h4>
+                                            <p class="card-text text-capitalize">@item.Description</p>
+                                            <div class="d-flex justify-content-around small text-muted">
+                                                <span><i class="bi bi-droplet"></i> @item.Humidity%</span>
+                                                <span><i class="bi bi-wind"></i> @item.WindSpeed м/с</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background: linear-gradient(135deg, #74b9ff, #a29bfe); min-height: 100vh; }
+    .card { transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); }
+</style>
