@@ -10,7 +10,6 @@ namespace WeatherApp.Services
         public async Task<List<WeatherData>> GetWeatherAsync(string city, string period)
         {
             using var client = new HttpClient();
-            // Для примера используем 5-дневный прогноз (бесплатный лимит)
             string url = $"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={_apiKey}&units=metric&lang=ru";
 
             var response = await client.GetStringAsync(url);
