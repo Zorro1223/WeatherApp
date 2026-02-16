@@ -1,0 +1,6 @@
+services:
+  weatherapp:
+    image: ${DOCKER_REGISTRY-}weatherapp
+    build:
+      context: .
+      dockerfile: WeatherApp/Dockerfile
