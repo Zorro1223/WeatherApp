@@ -5,6 +5,8 @@ namespace WeatherApp.Services
 {
     public class WeatherService
     {
+        
+
         private readonly string _apiKey = "bb79c9bd2bb05c51090e225e6e3d06d8";
 
         public async Task<List<WeatherData>> GetWeatherAsync(string city, string period)
